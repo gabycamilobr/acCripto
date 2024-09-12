@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,24 +9,21 @@ import * as CryptoJS from 'crypto-js';
 })
 export class HomePage {
 
-  constructor() {}
+  nome: string=''
+  email: string=''
+  nota: string= ''
+  chaveSecreta: string=''
 
-  message: string = '';
-  secretKey: string = '';
-  encryptedMessage: string = '';
-  decryptedMessage: string = '';
+  constructor(public router: Router) {}
 
-  encryptMessage() {
-    if (this.message && this.secretKey) {
-      const encrypted = CryptoJS.AES.encrypt(this.message, this.secretKey).toString();
-      this.encryptedMessage = encrypted;
+  Criptografar(){
+    if(this.nome && this.email && this.nota && this.chaveSecreta){
+      const nomeCriptografado =  CryptoJS.AES.encrypt(this.nome,this.chaveSecreta).toString()
+      const emailCriptografado =  CryptoJS.AES.encrypt(this.email,this.chaveSecreta).toString()
+      const notaCriptografado =  CryptoJS.AES.encrypt(this.nota,this.chaveSecreta).toString()
+      this.router.navigateByUrl
+      (`descriptografia/${nomeCriptografado}/${emailCriptografado}/${notaCriptografado}/${this.chaveSecreta}`)
     }
   }
-  decryptMessage() {
-    if (this.encryptedMessage && this.secretKey) {
-      const bytes = CryptoJS.AES.decrypt(this.encryptedMessage, this.secretKey);
-      const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-      this.decryptedMessage = decrypted;
-    }
-  }
+
 }

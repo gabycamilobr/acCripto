@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'descriptografia/:nomeCriptografado/:emailCriptografado/:notaCriptografado/:chaveSecreta',
+    loadChildren: () => import('./descriptografia/descriptografia.module').then( m => m.DescriptografiaPageModule)
+  },
 ];
 
 @NgModule({
@@ -20,3 +24,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
